@@ -1,14 +1,16 @@
 ## Working together, the following two fuctions cache the inverse of a matrix, which potentially takes long to compute.
 ## The first function create the initial matrix, and the second function computes its inverse.
-##
+
 ## Example usage:
 ## > m = rbind(c(1,-0.25), c(-0.24,1))
 ## > cacheMatrix <- makeCacheMatrix()
 ## > cacheMatrix$set(m)
+
 ## > cacheSolve(cacheMatrix)
 ## [,1]      [,2]
 ## [1,] 1.0638298 0.2659574
 ## [2,] 0.2553191 1.0638298
+
 ## > cacheSolve(cacheMatrix)
 ## getting cached data
 ## [,1]      [,2]
