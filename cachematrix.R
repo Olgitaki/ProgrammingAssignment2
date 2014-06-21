@@ -1,34 +1,16 @@
-## Working together, the following two fuctions cache the inverse of a matrix, which potentially takes long to compute.
-## The first function create the initial matrix, and the second function computes its inverse.
 
-## Example usage:
-## > m = rbind(c(1,-0.25), c(-0.24,1))
-## > cacheMatrix <- makeCacheMatrix()
-## > cacheMatrix$set(m)
-
-## > cacheSolve(cacheMatrix)
-## [,1]      [,2] 
-## [1,] 1.0638298 0.2659574
-## [2,] 0.2553191 1.0638298
-
-## > cacheSolve(cacheMatrix)
-## getting cached data
-## [,1]      [,2]
-## [1,] 1.0638298 0.2659574
-## [2,] 0.2553191 1.0638298
-
-## This function creates a special "matrix" object that can cache its inverse of the passed matrix.
+## Below we create a special "matrix" object that can cache its inverse of the passed matrix.
 makeCacheMatrix <- function(x = matrix()) {
-    inv <- NULL
-    set <- function(y){
+    m <- NULL  ##start with a null
+    set <- function(y){ ##define the set function
         x <<- y
-        inv <<- NULL
+        m <<- NULL
     }
     
-    get <- function() x
+    get <- function() x ##get back the x
     
-    setinverse <- function(inverse) inv <<- inverse
-    getinverse <- function() inv
+    setinverse <- function(solve) m <<- solve ##inverse is used to compute the inverse
+    getinverse <- function() m
     
     list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
 }
@@ -39,16 +21,19 @@ makeCacheMatrix <- function(x = matrix()) {
 ## (and the matrix has not changed), then `cacheSolve` should retrieve the
 ## inverse from the cache.
 cacheSolve <- function(x, ...) {
-    inv <- x$getinverse()
+    m <- x$getinverse()
     
-    if( !is.null(inv) ){
+    if( !is.null(m) ){
         message("getting cached data")
-        return(inv)
+        return(m)
     }
     
     data <- x$get()
-    inv <- solve(data, ...)
-    x$setinverse(inv)
+    m <- solve(data, ...)
+    x$setinverse(m)
     
-    inv
+    m ##returns the inverse of the matrix
 }
+
+
+
